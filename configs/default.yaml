@@ -89,5 +89,5 @@ targets:
     'face under Flash Lighting',
 
   ]
-alpha: [-50,51,10]
+alpha: [ -50,51,10 ]
 beta: 0.1
