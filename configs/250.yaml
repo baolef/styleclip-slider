@@ -1,7 +1,7 @@
 model: pretrained/ffhq.pkl
 direction: tensor/fs3.npy
 input: samples
-output: output
+output: output250
 neutral: face
 targets:
   [
@@ -91,4 +91,4 @@ targets:
   ]
 alpha: [ -50,51,10 ]
 beta: 0.1
-size: 256
+size: [250,250]

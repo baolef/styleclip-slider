@@ -24,7 +24,7 @@ def prepare(config, device):
     return model, fs3, manipulator
 
 
-def generate(model, fs3, manipulator, neutral, target, beta, alpha, output, filenames):
+def generate(model, fs3, manipulator, neutral, target, beta, alpha, output, filenames, size):
     classnames = [neutral, target]
     delta_t = get_delta_t(classnames, model)
     delta_s, num_channel = get_delta_s(fs3, delta_t, manipulator, beta_threshold=beta)
@@ -33,10 +33,10 @@ def generate(model, fs3, manipulator, neutral, target, beta, alpha, output, file
     manipulator.set_alpha(alpha)
     styles = manipulator.manipulate(delta_s)
     all_imgs = manipulator.synthesis_from_styles(styles, 0, manipulator.num_images)
-    save(all_imgs, alpha, os.path.join(output, target), filenames)
+    save(all_imgs, alpha, os.path.join(output, target), filenames, size)
 
 
-def save(all_imgs, lst_alpha, output, filenames):
+def save(all_imgs, lst_alpha, output, filenames, size):
     lst = []
     for imgs in all_imgs:
         lst.append((imgs.permute(0, 2, 3, 1) * 127.5 + 128).clamp(0, 255).to(torch.uint8).numpy())
@@ -47,7 +47,7 @@ def save(all_imgs, lst_alpha, output, filenames):
         if not os.path.exists(path):
             os.makedirs(path)
         for j, img in enumerate(imgs):
-            Image.fromarray(img, 'RGB').save(os.path.join(path, filenames[j]))
+            Image.fromarray(img, 'RGB').resize(size, Image.LANCZOS).save(os.path.join(path, filenames[j]))
 
 
 def main(config, device):
@@ -59,7 +59,18 @@ def main(config, device):
     phar = tqdm(config['targets'])
     for target in phar:
         phar.set_postfix_str(target)
-        generate(model, fs3, manipulator, config['neutral'], target, config['beta'], alpha, config['output'], filenames)
+        generate(
+            model=model,
+            fs3=fs3,
+            manipulator=manipulator,
+            neutral=config['neutral'],
+            target=target,
+            beta=config['beta'],
+            alpha=alpha,
+            output=config['output'],
+            filenames=filenames,
+            size=config['size']
+        )
 
 
 if __name__ == '__main__':
