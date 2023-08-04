@@ -1,0 +1,94 @@
+model: pretrained/ffhq256.pkl
+direction: tensor/fs3ffhq256.npy
+input: samples
+output: output256
+neutral: face
+targets:
+  [
+    'face with Arched Eyebrows',
+    'face with Bushy Eyebrows',
+    'face with Big Lips',
+
+    'face with Big Nose',
+    'face with Pointy Nose',
+
+    'face with Black Hair',
+    'face with Blond Hair',
+    'face with Brown Hair',
+    'face with Gray Hair',
+    'face with Curly Hair',
+    'face with Straight Hair',
+    'face with Wavy Hair',
+    'face with Receding Hairline',
+    'face with Bangs',
+
+    'face with Eyeglasses',
+    'face with Sunglasses',
+
+    'face with Eyes Open',
+    'face with Narrow Eyes',
+    'face with Brown Eyes',
+    'face with Bags Under Eyes',
+
+    'face with Heavy Makeup',
+    'face with Lipstick',
+
+    'face with Mouth Closed',
+    'face with Mouth Slightly Open',
+    'face with Mouth Wide Open',
+
+    'face with Beard',
+    'face with No Beard',
+    'face with Mustache',
+    'face with Goatee',
+
+    'face with Pale Skin',
+    'face with Shiny Skin',
+    'face with Rosy Cheeks',
+    'face with Sideburns',
+
+    'face with Earrings',
+    'face with Hat',
+    'face with Necklace',
+    'face with Necktie',
+
+    'face with Double Chin',
+    'face with High Cheekbones',
+    'face with Frowning',
+    'face with Round Jaw',
+
+    'Asian face',
+    'White face',
+    'Black face',
+    'Indian face',
+
+    'Baby face',
+    'Child face',
+    'Middle Aged face',
+    'Senior face',
+    'Youth face',
+
+    'Oval Face',
+    'Square Face',
+    'Round Face',
+
+    'Attractive face',
+    'Bald face',
+    'Blurry face',
+    'Chubby face',
+    'Smiling face',
+
+    'Surprised face',
+    'Fearful face',
+    'Disgusted face',
+    'Happy face',
+    'Sad face',
+    'Angry face',
+
+    'face under Harsh Lighting',
+    'face under Flash Lighting',
+
+  ]
+alpha: [ -5,5,0.01 ]
+beta: 0.1
+size: [ 256,256 ]
