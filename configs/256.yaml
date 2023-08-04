@@ -1,7 +1,7 @@
-model: pretrained/ffhq.pkl
-direction: tensor/fs3.npy
+model: pretrained/ffhq256.pkl
+direction: tensor/fs3ffhq256.npy
 input: samples
-output: output
+output: output256
 neutral: face
 targets:
   [
