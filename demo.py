@@ -101,11 +101,12 @@ def main(config, device, port):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='slider parameters')
     parser.add_argument('--config', type=str, default='configs/default.yaml', help='config path')
-    parser.add_argument('--device', type=str, default='cuda', help='device')
+    parser.add_argument('--gpu', type=str, default='0', help='gpu')
     parser.add_argument('--port', type=int, default=8050, help='port')
     args = parser.parse_args()
 
     with open(args.config, 'r') as f:
         config_ = yaml.load(f, Loader=yaml.FullLoader)
         print('config loaded.')
-    main(config_, args.device, args.port)
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    main(config_, 'cuda', args.port)
