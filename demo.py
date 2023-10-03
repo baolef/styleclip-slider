@@ -31,6 +31,10 @@ def get_app(path, slider, targets, H, W):
     app = Dash(__name__)
     images = []
     ids = []
+    data = []
+    for group, values in targets.items():
+        for value in values:
+            data.append({'value': value, 'label': value, 'group': group})
     for filename in sorted(os.listdir(path)):
         img = Image.open(os.path.join(path, filename))
         filename = filename.split('.')[0]
@@ -46,7 +50,7 @@ def get_app(path, slider, targets, H, W):
         [
             html.Div([dmc.Slider(id="slider", min=slider[0], max=slider[1], step=slider[2], precision=2)],
                      style={'width': '50%', 'display': 'inline-block'}),
-            html.Div([dmc.Select(data=targets, id="dropdown", value=targets[0], clearable=False, creatable=True,
+            html.Div([dmc.Select(data=data, id="dropdown", value=data[0]['value'], clearable=False, creatable=True,
                                  searchable=True)],
                      style={'width': '30%', 'display': 'inline-block'}),
             html.Div([dcc.Loading(id="loading", children=html.Div(id=ids[0]), type="circle")],
@@ -97,11 +101,12 @@ def main(config, device, port):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='slider parameters')
     parser.add_argument('--config', type=str, default='configs/default.yaml', help='config path')
-    parser.add_argument('--device', type=str, default='cuda', help='device')
+    parser.add_argument('--gpu', type=str, default='0', help='gpu')
     parser.add_argument('--port', type=int, default=8050, help='port')
     args = parser.parse_args()
 
     with open(args.config, 'r') as f:
         config_ = yaml.load(f, Loader=yaml.FullLoader)
         print('config loaded.')
-    main(config_, args.device, args.port)
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    main(config_, 'cuda', args.port)

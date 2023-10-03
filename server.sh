@@ -1,7 +1,7 @@
 #!/bin/bash
 
 port=1225
-device=cuda
+device=0
 config='configs/default.yaml'
 
 while getopts p:d:c: flag; do
@@ -14,4 +14,4 @@ done
 
 source /usr/local/anaconda3/etc/profile.d/conda.sh
 conda activate zoom
-python demo.py --port $port --device $device --config $config
+python demo.py --port $port --gpu $device --config $config
